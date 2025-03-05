@@ -11,19 +11,42 @@ function asignarTextoElemento(elemento, texto) {
 
 function agregarAmigo(){
     let amigo = document.getElementById('amigo').value;
-    if(amigo == ""){
-        alert('Registra por favor un nombre valido')
+    let nombre = amigo.trim();
+    //console.log(amigo);
+    //console.log(nombre);
+    if(nombre === ""){
+        alert('Por favor,inserte un nombre')
+        return;
     }else{
-        amigos.push(amigo);
-        console.log(amigos);
-        asignarTextoElemento('ul',`${amigos}`)
+        amigos.push(nombre);
+        //console.log(amigos);        
         limpiarCaja()
+        mostrarAmigos();
     }
     
 }
 
 function limpiarCaja() {
-    document.querySelector('#listaAmigos').value = '';
+    document.querySelector('#amigo').value = '';
+}
+
+function mostrarAmigos(){
+    let lista = document.getElementById('listaAmigos');
+    lista.innerHTML = "";
+    amigos.forEach(nombre => {
+        let li = document.createElement('li');
+        li.textContent = nombre;
+        lista.appendChild(li);
+    });
+}
+
+function sortearAmigo(){
+    if (amigos.length === 0){
+        alert('Agregue al menos un amigo para sortear')
+        return;
+    }
+    let sorteoAmigos = Math.floor(Math.random() * amigos.length);
+    document.getElementById('resultado').textContent = `El amigo secreto es : ${amigos[sorteoAmigos]}`;
 }
 
 agregarAmigo();
